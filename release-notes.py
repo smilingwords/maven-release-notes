@@ -67,5 +67,4 @@ else:
         print("Writing to support file OK!")
     release_suppfile.close()
 
-
 releasemd.close()

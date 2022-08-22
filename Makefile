@@ -3,8 +3,6 @@
 release: build rel_notes
 
 build:
-	mvn -P production clean release:prepare
-	mvn -P production release:perform
 
 maven-release-notes:
 	git clone git@github.com:smilingwords/maven-release-notes.git

@@ -13,6 +13,8 @@ xml_name = pomxml.getElementsByTagName('name')
 app_ver = xml_version[0].firstChild.data
 app_name = xml_name[0].firstChild.data
 
+app_ver_num, app_ver_suffix = app_ver.split('-')
+
 release_suppfile = open(RELEASE_SUPPFILE_PATH, "a+")
 release_suppfile.seek(0)
 
@@ -22,15 +24,15 @@ release_suppfile.close()
 
 print("RELEASE NOTE GENERATOR")
 print("Generating release notes for app '" +
-      app_name+"' with version '"+app_ver+"'")
+      app_name+"' with version '"+app_ver_num+"'")
 
-app_ver_full = app_ver+"\n"
+app_ver_full = app_ver_num+"\n"
 
 if app_ver_full in already_done:
     print("Release note already added! Quitting")
     quit()
 
-print("Please write release notes (End with Ctrl-D):")
+print("Please write release notes and press Enter (End with Ctrl-D):")
 release_notes_raw = []
 while True:
     try:
@@ -48,7 +50,7 @@ for note in release_notes_raw:
 now = datetime.now()
 dt_string = now.strftime("Datetime: %d-%m-%Y %H:%M:%S")
 
-append_text = "# Release version '"+app_ver+"'\n"+dt_string+"\n"+release_notes
+append_text = "# Release version '"+app_ver_num+"'\n"+dt_string+"\n"+release_notes
 
 releasemd = open(RELEASE_NOTES_PATH, "a")
 
@@ -60,7 +62,7 @@ else:
     print("Writing to RELEASE.md OK!")
     release_suppfile = open("release_supp.data", "a")
     try:
-        release_suppfile.write(app_ver+"\n") == 0
+        release_suppfile.write(app_ver_num+"\n") == 0
     except IOError:
         print("Error writing to support file!")
     else:

@@ -1,5 +1,8 @@
 from datetime import datetime
 from xml.dom import minidom
+from git import Repo
+
+repo = Repo('/home/main/GITHUB_PROJECTS/maven-release-notes')
 
 POMXML_PATH = "pom.xml"
 RELEASE_SUPPFILE_PATH = "release_supp.data"
@@ -9,9 +12,13 @@ pomxml = minidom.parse(POMXML_PATH)
 
 xml_version = pomxml.getElementsByTagName('version')
 xml_name = pomxml.getElementsByTagName('name')
+xml_message = pomxml.getElementsByTagName('message')
+xml_use_ticket = pomxml.getElementsByTagName('use-ticket')
 
 app_ver = xml_version[0].firstChild.data
 app_name = xml_name[0].firstChild.data
+app_msg = xml_message[0].firstChild.data
+app_use_tckt = xml_use_ticket[0].firstChild.data
 
 app_ver_numbr, app_ver_suffix = app_ver.split('-')
 
@@ -70,3 +77,17 @@ else:
     release_suppfile.close()
 
 releasemd.close()
+
+message_text = ""
+if app_msg != None:
+    if app_use_tckt == "true":
+        print("Please write release notes and press Enter")
+        ticket_txt = input()
+        message_text = "\""+app_msg+app_ver_numbr+", "+ticket_txt+"\""
+    elif app_use_tckt == "false":
+        message_text = "\""+app_msg+app_ver_numbr+"\""
+else:
+    message_text = "\""+"Vcs: Release "+app_ver_numbr+"\""
+
+repo.git.add("--all")
+repo.git.commit("-m", message_text)

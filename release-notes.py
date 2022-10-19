@@ -90,7 +90,7 @@ if xml_message:
     if app_use_ticket == "true":
         print("Please write ticket and press Enter")
         ticket_txt = input()
-        message_text = app_message+app_version_number+", "+ticket_txt
+        message_text = app_message+" "+app_version_number+", "+ticket_txt
 
     subprocess.run(["git", "add", "RELEASE.md", "release_supp.data"])
     subprocess.run(["git", "commit", "-m", message_text])

@@ -15,10 +15,11 @@ Uses pom.xml file to generate structured release notes (RELEASE.md) file
   * example of pom.xml configuration:
 
       <profile>
-          <id>release</id>
+          <id>production</id>
           <properties>
-              <message>Vcs: Release</message>
-              <use-ticket>true</use-ticket>
+              <release-notes-message>chore: release</release-notes-message>
+              <use-release-notes-ticket>true</use-release-notes-ticket>
+              ...
           </properties>
       </profile>
 

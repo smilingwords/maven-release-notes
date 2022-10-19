@@ -84,7 +84,9 @@ releasemd.close()
 # default value
 message_text = app_message+app_version_number
 
-current_branch = subprocess.check_output(['git', 'branch', '--show-current'])
+s = subprocess.check_output(["git", "branch", "--show-current"])
+
+current_branch = s.decode("utf-8")
 
 if xml_message:
     if app_use_ticket == "true":

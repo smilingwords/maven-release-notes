@@ -86,7 +86,7 @@ message_text = app_message+app_version_number
 
 s = subprocess.check_output(["git", "branch", "--show-current"])
 
-current_branch = s.decode("utf-8")
+current_branch = "\""+s.decode("utf-8")+"\""
 
 if xml_message:
     if app_use_ticket == "true":

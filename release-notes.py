@@ -82,11 +82,7 @@ else:
 releasemd.close()
 
 # default value
-message_text = app_message+app_version_number
-
-s = subprocess.check_output(["git", "branch", "--show-current"])
-
-current_branch = "\""+s.decode("utf-8")+"\""
+message_text = app_message+" "+app_version_number
 
 if xml_message:
     if app_use_ticket == "true":
@@ -96,7 +92,6 @@ if xml_message:
 
     subprocess.run(["git", "add", "RELEASE.md", "release_supp.data"])
     subprocess.run(["git", "commit", "-m", message_text])
-    subprocess.run(["git", "push", "--set-upstream", "origin", current_branch])
 
 else:
     print("No message template defined in pom.xml file!")

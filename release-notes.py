@@ -60,7 +60,7 @@ for note in release_notes_raw:
 now = datetime.now()
 dt_string = now.strftime("Datetime: %d-%m-%Y %H:%M:%S")
 
-append_text = "# Release version"+" "+app_version_number+"\n"+dt_string+"\n"+release_notes
+append_text = "\n## Release version"+" "+app_version_number+"\n\n"+dt_string+"\n\n"+release_notes
 
 releasemd = open(RELEASE_NOTES_PATH, "a")
 
@@ -90,6 +90,10 @@ if xml_message:
         ticket_txt = input()
         message_text = app_message+" "+app_version_number+", "+ticket_txt
 
+    subprocess.run(["git", "add", "RELEASE.md", "release_supp.data"])
+    subprocess.run(["git", "commit", "-m", message_text])
+
+# in case of pre-commit this will run again
     subprocess.run(["git", "add", "RELEASE.md", "release_supp.data"])
     subprocess.run(["git", "commit", "-m", message_text])
 

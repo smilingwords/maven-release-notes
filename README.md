@@ -1,4 +1,4 @@
-# Maven release notes script
+# Information about Maven release notes script
 
 Release notes script for maven projects which is working based on pom.xml file in current folder.
 Uses pom.xml file to generate structured release notes (RELEASE.md) file

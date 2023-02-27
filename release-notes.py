@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 from xml.dom import minidom
 import subprocess
 
@@ -60,12 +61,20 @@ for note in release_notes_raw:
 now = datetime.now()
 dt_string = now.strftime("Datetime: %d-%m-%Y %H:%M:%S")
 
-append_text = "\n## Release version"+" "+app_version_number+"\n\n"+dt_string+"\n\n"+release_notes
+append_text = "\n## Release version"+" " + \
+    app_version_number+"\n\n"+dt_string+"\n\n"+release_notes
 
 releasemd = open(RELEASE_NOTES_PATH, "a")
 
+# Check if file is empty
+empty_before = False
+if os.stat(RELEASE_NOTES_PATH).st_size == 0:
+    empty_before = True
+
+if empty_before:
+    append_text = "# RELEASE NOTES+\n"+append_text
 try:
-    releasemd.write(append_text+"\n\n")
+    releasemd.write(append_text)
 except IOError:
     print("Error writing to RELEASE.md!")
 else:
